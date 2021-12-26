@@ -24,4 +24,16 @@ export class UsersService {
         return this.userRepository.createUser(createUserDto, UserRole.USER)
     }
 
+    async getUser(user: User, userId: string): Promise<User | undefined>{
+        if (user.role === UserRole.ADMIN)
+            return await this.userRepository.findOne(userId, {select: ['email', 'name', 'role', 'id']});
+        else if (user.role === UserRole.USER) {
+            const foundUser = await this.userRepository.findOne(userId, {select: ['email', 'name', 'role', 'id']});
+            if (foundUser.role === UserRole.USER)
+                return foundUser
+            else null
+        }
+        return null
+    }
+
 }
