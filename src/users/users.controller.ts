@@ -20,10 +20,7 @@ export class UsersController {
         @Body(ValidationPipe) createUserDto: CreateUserDto,
     ): Promise<ReturnUserDto>{
         const user = await this.userService.createUser(createUserDto)
-        return {
-            user,
-            message: 'User created'
-        }
+        return {user, message: 'User created'}
     }
 
 }
