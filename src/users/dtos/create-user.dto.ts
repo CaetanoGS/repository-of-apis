@@ -7,40 +7,40 @@ import {
 
 export class CreateUserDto {
     @IsNotEmpty({
-        message: 'Informe um endereço de email',
+        message: 'Email is required',
     })
     @IsEmail(
         {},
         {
-            message: 'Informe um endereço de email válido',
+            message: 'Email invalid',
         },
     )
     @MaxLength(200, {
-        message: 'O endereço de email deve ter menos de 200 caracteres',
+        message: 'The emails length is invalid, the max is 200 characters',
     })
     email: string;
 
     @IsNotEmpty({
-        message: 'Informe o nome do usuário',
+        message: 'Name is required',
     })
     @MaxLength(200, {
-        message: 'O nome deve ter menos de 200 caracteres',
+        message: 'The emails length is invalid, the max is 200 characters',
     })
     name: string;
 
     @IsNotEmpty({
-        message: 'Informe uma senha',
+        message: 'Password is required',
     })
     @MinLength(6, {
-        message: 'A senha deve ter no mínimo 6 caracteres',
+        message: 'The min number of characters is 6',
     })
     password: string;
 
     @IsNotEmpty({
-        message: 'Informe a confirmação de senha',
+        message: 'Password confirmation is required',
     })
     @MinLength(6, {
-        message: 'A confirmação de senha deve ter no mínimo 6 caracteres',
+        message: 'The min number of characters is 6',
     })
     passwordConfirmation: string;
 }
