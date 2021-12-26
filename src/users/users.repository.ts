@@ -5,6 +5,7 @@ import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 import { ConflictException, InternalServerErrorException } from '@nestjs/common';
+import { CredentialsDto } from 'src/auth/dtos/credentials.dto';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -31,6 +32,17 @@ export class UserRepository extends Repository<User> {
                 throw new ConflictException('Duplicated e-mail');
             else
                 throw new InternalServerErrorException('Error to save user in the DB');
+        }
+    }
+
+    async checkCredentials(credentialsDto: CredentialsDto): Promise<User> {
+        const { email, password } = credentialsDto;
+        const user = await this.findOne({email});
+
+        if (user && (await user.checkPassword(password))) {
+            return user;
+        } else {
+            return null;
         }
     }
 
